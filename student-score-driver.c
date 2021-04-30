@@ -91,49 +91,57 @@ void operation_processor(int option)
 void add_student_data()
 {
 	float nilai_akhir, nilai_tugas, nilai_UTS, nilai_quiz, nilai_UAS;
-		if(configure_file("a")==NULL){
+
+	if(configure_file("a")==NULL){
 		throw_exception();
 	}
-printf("Masukan NIM = ");
-scanf("%s", student.NIM);
-printf("Nama = ");
-scanf("%s", student.name);
-printf("Nilai Tugas = ");
-scanf("%f", &nilai_tugas);
-printf("Nilai Quiz = ");
-scanf("%f", &nilai_quiz);
-printf("Nilai UTS = ");
-scanf("%f", &nilai_UTS);
-printf("Nilai UAS = ");
-scanf("%f", &nilai_UAS);
-nilai_akhir = (0,2*nilai_quiz)+(0,2*nilai_tugas)+(0,3*nilai_UTS)+(0,3*nilai_UAS);
-student.task_score = nilai_tugas;
-student.mid_exam_score = nilai_UTS;
-student.quiz_score = nilai_quiz;
-student.final_exam_score = nilai_UAS;
-student.final_score = nilai_akhir;
-student.q_letter = calculate_Q_letter(nilai_akhir);
-puts("OK");
-save_student_data(student);
-operation_menu();
+
+    printf("Masukan NIM = ");
+    scanf("%s", student.NIM);
+    printf("Nama = ");
+    scanf("%s", student.name);
+    printf("Nilai Tugas = ");
+    scanf("%f", &nilai_tugas);
+    printf("Nilai Quiz = ");
+    scanf("%f", &nilai_quiz);
+    printf("Nilai UTS = ");
+    scanf("%f", &nilai_UTS);
+    printf("Nilai UAS = ");
+    scanf("%f", &nilai_UAS);
+
+    nilai_akhir = (0.2*nilai_quiz)+(0.2*nilai_tugas)+(0.3*nilai_UTS)+(0.3*nilai_UAS);
+
+    student.task_score = nilai_tugas;
+    student.mid_exam_score = nilai_UTS;
+    student.quiz_score = nilai_quiz;
+    student.final_exam_score = nilai_UAS;
+    student.final_score = nilai_akhir;
+    student.q_letter = calculate_Q_letter(nilai_akhir);
+
+    puts("\nOK\n");
+    save_student_data(student);
+    operation_menu();
 }
 
 void get_all_student_data()
 {
-	if(configure_file("rb")==NULL){
+    if (configure_file("rb") == NULL)
+    {
 		throw_exception();
 	}
- while (read_student_data()==1){
- 	printf("NIM=%s\n",student.NIM);
-    printf("Nama=%s\n",student.name);
-    printf("Nilai Tugas=%.2f\n",student.task_score);
-    printf("NIlai Quiz=%.2f\n",student.quiz_score);
-    printf("Nilai UTS=%.2f\n",student.mid_exam_score);
-    printf("Nilai UAS=%.2f\n",student.final_exam_score);
-    printf("NIlai Akhir=%.2f\n",student.final_score);
-    printf("Huruf Mutu=%c\n",student.q_letter);
+    while (read_student_data() == 1) {
+        printf("NIM=%s\n", student.NIM);
+        printf("Nama=%s\n", student.name);
+        printf("Nilai Tugas=%.2f\n", student.task_score);
+        printf("NIlai Quiz=%.2f\n", student.quiz_score);
+        printf("Nilai UTS=%.2f\n", student.mid_exam_score);
+        printf("Nilai UAS=%.2f\n", student.final_exam_score);
+        printf("Nilai Akhir=%.2f\n", student.final_score);
+        printf("Huruf Mutu=%c\n", student.q_letter);
+        printf("\n");
     }
- close_file();
+    close_file();
+    operation_menu();
 }
 
 void get_student_data_by_NIM()
@@ -148,19 +156,24 @@ void update_student_data()
 
 char calculate_Q_letter(float fs)
 {
-	if(fs>=80&&fs<=100){
+	if(fs >= 80 && fs <= 100)
+    {
 		return 'A';
 	}
-	else if(fs>=68&&fs<=79){
+	else if(fs >= 68 && fs <=79 )
+    {
 		return 'B';
 	} 
-	else if(fs>=45&&fs<=67){
+	else if(fs >= 45 && fs<= 67) 
+    {
 		return 'C';
 	}
-	else if(fs>=31&&fs<=44){
+	else if(fs >= 31 && fs <= 44)
+    {
 		return 'D';
 	}
-	else if(fs>=0&&fs<=30){
+	else if(fs >= 0 && fs <= 30)
+    {
 		return 'E';
 	}
 	else
