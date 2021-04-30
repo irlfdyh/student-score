@@ -4,8 +4,7 @@
 struct Student_Data
 {
     char NIM[8], name[15], q_letter;
-    int task_score, mid_exam_score;
-    float final_exam_score;
+    float quiz_score, task_score, mid_exam_score, final_exam_score, final_score;
 } student;
 
 #endif

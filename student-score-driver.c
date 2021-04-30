@@ -9,7 +9,7 @@ void add_student_data();
 void get_all_student_data();
 void get_student_data_by_NIM();
 void update_student_data();
-void calculate_Q_letter();
+char calculate_Q_letter(float fs);
 void throw_exception();
 
 int main()
@@ -76,7 +76,6 @@ void operation_processor(int option)
         }
         case 5 : 
         {
-            calculate_Q_letter();
             break;
         }
         default : 
@@ -91,7 +90,28 @@ void operation_processor(int option)
 
 void add_student_data()
 {
-
+	float nilai_akhir, nilai_tugas, nilai_UTS, nilai_quiz, nilai_UAS;
+printf("Masukan NIM = ");
+scanf("%s", student.NIM);
+printf("Nama = ");
+scanf("%s", student.name);
+printf("Nilai Tugas = ");
+scanf("%f", &nilai_tugas);
+printf("Nilai Quiz = ");
+scanf("%f", &nilai_quiz);
+printf("Nilai UTS = ");
+scanf("%f", &nilai_UTS);
+printf("Nilai UAS = ");
+scanf("%f", &nilai_UAS);
+nilai_akhir = (0,2*nilai_quiz)+(0,2*nilai_tugas)+(0,3*nilai_UTS)+(0,3*nilai_UAS);
+student.task_score = nilai_tugas;
+student.mid_exam_score = nilai_UTS;
+student.quiz_score = nilai_quiz;
+student.final_exam_score = nilai_UAS;
+student.final_score = nilai_akhir;
+student.q_letter = calculate_Q_letter(nilai_akhir);
+puts("OK");
+operation_menu();
 }
 
 void get_all_student_data()
@@ -109,9 +129,27 @@ void update_student_data()
 
 }
 
-void calculate_Q_letter()
+char calculate_Q_letter(float fs)
 {
-
+	if(fs>=80&&fs<=100){
+		return 'A';
+	}
+	else if(fs>=68&&fs<=79){
+		return 'B';
+	} 
+	else if(fs>=45&&fs<=67){
+		return 'C';
+	}
+	else if(fs>=31&&fs<=44){
+		return 'D';
+	}
+	else if(fs>=0&&fs<=30){
+		return 'E';
+	}
+	else
+	{
+		return 'Z';
+	}
 }
 
 void throw_exception()
