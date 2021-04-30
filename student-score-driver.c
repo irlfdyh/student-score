@@ -99,18 +99,18 @@ void add_student_data()
 		throw_exception();
 	}
 
-    printf("Masukan NIM = ");
-    scanf("%s", student.NIM); fflush(stdin);
-    printf("Nama = ");
-    scanf("%s", student.name); fflush(stdin);
-    printf("Nilai Tugas = ");
-    scanf("%f", &nilai_tugas); fflush(stdin);
-    printf("Nilai Quiz = ");
-    scanf("%f", &nilai_quiz); fflush(stdin);
-    printf("Nilai UTS = ");
-    scanf("%f", &nilai_UTS); fflush(stdin);
-    printf("Nilai UAS = ");
-    scanf("%f", &nilai_UAS); fflush(stdin);
+    printf("Masukan NIM     : ");
+    scanf("%s", student.NIM);
+    printf("Nama            : ");
+    scanf("%s", student.name);
+    printf("Nilai Tugas     : ");
+    scanf("%f", &nilai_tugas);
+    printf("Nilai Quiz      : ");
+    scanf("%f", &nilai_quiz);
+    printf("Nilai UTS       : ");
+    scanf("%f", &nilai_UTS);
+    printf("Nilai UAS       : ");
+    scanf("%f", &nilai_UAS);
 
     nilai_akhir = (0.2 * nilai_quiz) + (0.2 * nilai_tugas) + (0.3 * nilai_UTS) + ( 0.3 *nilai_UAS);
 
@@ -123,7 +123,6 @@ void add_student_data()
 
     puts("\nOK\n");
     save_student_data(student);
-    close_file();
     operation_menu();
 }
 
@@ -149,8 +148,10 @@ void get_student_data_by_NIM()
     {
         throw_exception();
     }
-    printf("masukkan NIM anda = ");
+    printf("Masukkan NIM    : ");
     scanf("%s", q); fflush(stdin);
+
+    puts(" ");
 
     while (read_student_data() == 1)
     {

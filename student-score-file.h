@@ -21,4 +21,5 @@ int read_student_data()
 void save_student_data(struct Student_Data data)
 {
     fwrite(&data, sizeof(data), 1, fl);
+    close_file();
 }
