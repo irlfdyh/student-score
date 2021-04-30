@@ -146,7 +146,28 @@ void get_all_student_data()
 
 void get_student_data_by_NIM()
 {
+char q[10];
 
+if (configure_file("rb")==NULL){
+throw_exception();
+}
+printf("masukkan NIM anda = ");
+scanf("%s",&q);
+while (read_student_data()==1){
+if (student.NIM==q){
+	 printf("NIM=%s\n", student.NIM);
+        printf("Nama=%s\n", student.name);
+        printf("Nilai Tugas=%.2f\n", student.task_score);
+        printf("NIlai Quiz=%.2f\n", student.quiz_score);
+        printf("Nilai UTS=%.2f\n", student.mid_exam_score);
+        printf("Nilai UAS=%.2f\n", student.final_exam_score);
+        printf("Nilai Akhir=%.2f\n", student.final_score);
+        printf("Huruf Mutu=%c\n", student.q_letter);
+        printf("\n");
+}
+}
+close_file();
+operation_menu();
 }
 
 void update_student_data()
