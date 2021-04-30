@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "student-score-file.h"
 
 void starter_program();
@@ -9,6 +10,7 @@ void add_student_data();
 void get_all_student_data();
 void get_student_data_by_NIM();
 void update_student_data();
+void get_Q_letter_statistics();
 char calculate_Q_letter(float fs);
 void throw_exception();
 
@@ -76,6 +78,7 @@ void operation_processor(int option)
         }
         case 5 : 
         {
+            get_Q_letter_statistics();
             break;
         }
         default : 
@@ -97,19 +100,19 @@ void add_student_data()
 	}
 
     printf("Masukan NIM = ");
-    scanf("%s", student.NIM);
+    scanf("%s", student.NIM); fflush(stdin);
     printf("Nama = ");
-    scanf("%s", student.name);
+    scanf("%s", student.name); fflush(stdin);
     printf("Nilai Tugas = ");
-    scanf("%f", &nilai_tugas);
+    scanf("%f", &nilai_tugas); fflush(stdin);
     printf("Nilai Quiz = ");
-    scanf("%f", &nilai_quiz);
+    scanf("%f", &nilai_quiz); fflush(stdin);
     printf("Nilai UTS = ");
-    scanf("%f", &nilai_UTS);
+    scanf("%f", &nilai_UTS); fflush(stdin);
     printf("Nilai UAS = ");
-    scanf("%f", &nilai_UAS);
+    scanf("%f", &nilai_UAS); fflush(stdin);
 
-    nilai_akhir = (0.2*nilai_quiz)+(0.2*nilai_tugas)+(0.3*nilai_UTS)+(0.3*nilai_UAS);
+    nilai_akhir = (0.2 * nilai_quiz) + (0.2 * nilai_tugas) + (0.3 * nilai_UTS) + ( 0.3 *nilai_UAS);
 
     student.task_score = nilai_tugas;
     student.mid_exam_score = nilai_UTS;
@@ -120,6 +123,7 @@ void add_student_data()
 
     puts("\nOK\n");
     save_student_data(student);
+    close_file();
     operation_menu();
 }
 
@@ -146,7 +150,7 @@ void get_student_data_by_NIM()
         throw_exception();
     }
     printf("masukkan NIM anda = ");
-    scanf("%s", &q); fflush(stdin);
+    scanf("%s", q); fflush(stdin);
 
     while (read_student_data() == 1)
     {
@@ -169,6 +173,44 @@ void get_student_data_by_NIM()
 void update_student_data()
 {
 
+}
+
+void get_Q_letter_statistics()
+{
+    int aLtr = 0,
+        bLtr = 0,
+        cLtr = 0,
+        dLtr = 0,
+        eLtr = 0,
+        ict = 0;
+    if (configure_file("rb") == NULL)
+    {
+        throw_exception();
+    }
+    while (read_student_data() == 1)
+    {
+        ict++;
+        switch (student.q_letter)
+        {
+            case 'A' : aLtr++; break;
+            case 'B' : bLtr++; break;
+            case 'C' : cLtr++; break;
+            case 'D' : dLtr++; break;
+            case 'E' : eLtr++; break;
+        }
+    }
+
+    if (ict < 1)
+    {
+        throw_exception();
+    }
+    else 
+    {
+        puts("Tabel statistik nilai mutu mahasiswa");
+        print_letter_statistic(aLtr, bLtr, cLtr, dLtr, eLtr);
+        close_file();
+        operation_menu();
+    }
 }
 
 char calculate_Q_letter(float fs)
