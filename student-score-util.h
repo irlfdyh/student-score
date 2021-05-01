@@ -76,4 +76,24 @@ float calculate_final_score(
             ( 0.3 *nilai_UAS);
 }
 
+// get string input to allowing space
+void ginps(char obj[], int mvl)
+{
+    char c; int i = 0, end = 0;
+    do
+    {
+        c = getchar();
+        if (c == '\n' || i > mvl)
+        {
+            end++;
+        }
+        else
+        {
+            obj[i] = c;
+            i++;
+        }
+    }
+    while (end == 1);
+}
+
 #endif

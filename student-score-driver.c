@@ -2,6 +2,8 @@
 #include <string.h>
 #include "student-score-file.h"
 
+#define MAX_NAME 15
+
 void starter_program();
 void operation_menu();
 void operation_determiner();
@@ -103,15 +105,15 @@ void add_student_data()
     printf("Masukan NIM     : ");
     scanf("%s", student.NIM);
     printf("Nama            : ");
-    scanf("%s", student.name);
+    ginps(student.name, MAX_NAME);
     printf("Nilai Tugas     : ");
-    scanf("%f", &nilai_tugas);
+    scanf("%f", &nilai_tugas); fflush(stdin);
     printf("Nilai Quiz      : ");
-    scanf("%f", &nilai_quiz);
+    scanf("%f", &nilai_quiz); fflush(stdin);
     printf("Nilai UTS       : ");
-    scanf("%f", &nilai_UTS);
+    scanf("%f", &nilai_UTS); fflush(stdin);
     printf("Nilai UAS       : ");
-    scanf("%f", &nilai_UAS);
+    scanf("%f", &nilai_UAS); fflush(stdin);
 
     nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_UTS, nilai_UAS);
 
