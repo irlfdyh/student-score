@@ -13,6 +13,7 @@ void update_student_data();
 void get_Q_letter_statistics();
 char calculate_Q_letter(float fs);
 void throw_exception();
+float calculate_final_score(float nilai_tugas, float nilai_quiz, float nilai_uts, float nilai_uas);
 
 int main()
 {
@@ -112,7 +113,7 @@ void add_student_data()
     printf("Nilai UAS       : ");
     scanf("%f", &nilai_UAS);
 
-    nilai_akhir = (0.2 * nilai_quiz) + (0.2 * nilai_tugas) + (0.3 * nilai_UTS) + ( 0.3 *nilai_UAS);
+    nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_UTS, nilai_UAS);
 
     student.task_score = nilai_tugas;
     student.mid_exam_score = nilai_UTS;
@@ -195,6 +196,7 @@ void update_student_data()
 	fseek(fl, offset_byte, SEEK_SET);
 
 	int result = read_student_data();
+	float nilai_tugas, nilai_quiz, nilai_uts, nilai_uas, nilai_akhir;
 	
 	if (result == 0)
 	{
@@ -202,9 +204,31 @@ void update_student_data()
 	}
 	else 
 	{
-		printf("Nama = %s",student.name);
+	 puts("Data Sebelumnya ");
+	 print_data(student);
+	 printf ("Nilai Tugas : ");
+	 scanf("%f", &nilai_tugas);
+	 printf ("NIlai Quiz  : ");
+	 scanf("%f", &nilai_quiz);
+	 printf ("Nilai UTS   : ");
+	 scanf("%f", &nilai_uts);
+	 printf ("NIlai UAS   : ");
+	 scanf("%f", &nilai_uas);
+	 
+     nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_uts, nilai_uas);
+
+    student.task_score = nilai_tugas;
+    student.mid_exam_score = nilai_uts;
+    student.quiz_score = nilai_quiz;
+    student.final_exam_score = nilai_uas;
+    student.final_score = nilai_akhir;
+    student.q_letter = calculate_Q_letter(nilai_akhir);	 
+    fseek(fl, offset_byte, SEEK_SET);
+    save_student_data(student);
+    operation_menu();
+
 	}
-   
+    
     
   
 
@@ -274,6 +298,11 @@ char calculate_Q_letter(float fs)
 	{
 		return 'Z';
 	}
+}
+
+float calculate_final_score(float nilai_tugas, float nilai_quiz, float nilai_UTS, float nilai_UAS)
+{
+	return  (0.2 * nilai_quiz) + (0.2 * nilai_tugas) + (0.3 * nilai_UTS) + ( 0.3 *nilai_UAS);
 }
 
 void throw_exception()
