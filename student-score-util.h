@@ -42,19 +42,19 @@ char calculate_Q_letter(float fs)
     {
 		return 'A';
 	}
-	else if (fs >= 68 && fs <=79 )
+	else if (fs >= 68 && fs <= 79.99 )
     {
 		return 'B';
 	} 
-	else if (fs >= 45 && fs<= 67) 
+	else if (fs >= 45 && fs<= 67.99) 
     {
 		return 'C';
 	}
-	else if (fs >= 31 && fs <= 44)
+	else if (fs >= 31 && fs <= 44.99)
     {
 		return 'D';
 	}
-	else if (fs >= 0 && fs <= 30)
+	else if (fs >= 0 && fs <= 30.99)
     {
 		return 'E';
 	}
@@ -73,17 +73,17 @@ float calculate_final_score(
 	return  (0.2 * nilai_quiz) + 
             (0.2 * nilai_tugas) + 
             (0.3 * nilai_UTS) + 
-            ( 0.3 *nilai_UAS);
+            (0.3 * nilai_UAS);
 }
 
 // get string input to allowing space
-void ginps(char obj[], int mvl)
+void ginps(char obj[], int mxvl)
 {
     char c; int i = 0, end = 0;
     do
     {
         c = getchar();
-        if (c == '\n' || i > mvl)
+        if (c == '\n' || i > mxvl)
         {
             end++;
         }
@@ -94,6 +94,14 @@ void ginps(char obj[], int mvl)
         }
     }
     while (end == 1);
+}
+
+void cpy_ar(char nwobj[], char olobj[], int mxvl)
+{
+    for (int i = 0; i <= mxvl; i++)
+    {
+        nwobj[i] = olobj[i];
+    }
 }
 
 #endif

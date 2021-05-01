@@ -3,6 +3,7 @@
 #include "student-score-file.h"
 
 #define MAX_NAME 15
+#define MAX_NIM 8
 
 void starter_program();
 void operation_menu();
@@ -96,6 +97,7 @@ void add_student_data()
 {
 	float   nilai_akhir, nilai_tugas, nilai_quiz, 
             nilai_UTS, nilai_UAS;
+    struct Student_Data std;
 
 	if (configure_file("a") == NULL)
     {
@@ -103,9 +105,9 @@ void add_student_data()
 	}
 
     printf("Masukan NIM     : ");
-    scanf("%s", student.NIM);
+    scanf("%s", std.NIM);
     printf("Nama            : ");
-    ginps(student.name, MAX_NAME);
+    ginps(std.name, MAX_NAME);
     printf("Nilai Tugas     : ");
     scanf("%f", &nilai_tugas); fflush(stdin);
     printf("Nilai Quiz      : ");
@@ -117,15 +119,15 @@ void add_student_data()
 
     nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_UTS, nilai_UAS);
 
-    student.task_score = nilai_tugas;
-    student.mid_exam_score = nilai_UTS;
-    student.quiz_score = nilai_quiz;
-    student.final_exam_score = nilai_UAS;
-    student.final_score = nilai_akhir;
-    student.q_letter = calculate_Q_letter(nilai_akhir);
+    std.task_score = nilai_tugas;
+    std.mid_exam_score = nilai_UTS;
+    std.quiz_score = nilai_quiz;
+    std.final_exam_score = nilai_UAS;
+    std.final_score = nilai_akhir;
+    std.q_letter = calculate_Q_letter(nilai_akhir);
 
     puts("\nOK\n");
-    save_student_data(student);
+    save_student_data(std);
     operation_menu();
 }
 
@@ -178,6 +180,7 @@ void update_student_data()
 {
 	char q[8];
 	int ict = 0;
+    struct Student_Data std;
 
     if (configure_file("rb+") == NULL)
     {     
@@ -222,16 +225,19 @@ void update_student_data()
         
         nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_uts, nilai_uas);
 
-        student.task_score = nilai_tugas;
-        student.mid_exam_score = nilai_uts;
-        student.quiz_score = nilai_quiz;
-        student.final_exam_score = nilai_uas;
-        student.final_score = nilai_akhir;
-        student.q_letter = calculate_Q_letter(nilai_akhir);	
+        cpy_ar(std.NIM, student.NIM, MAX_NIM);
+        cpy_ar(std.name, student.name, MAX_NAME);
+        std.task_score = nilai_tugas;
+        std.mid_exam_score = nilai_uts;
+        std.quiz_score = nilai_quiz;
+        std.final_exam_score = nilai_uas;
+        std.final_score = nilai_akhir;
+        std.q_letter = calculate_Q_letter(nilai_akhir);	
 
         seek_file_position(offset_byte);
-        save_student_data(student);
+        save_student_data(std);
 
+        printf("\n");
         operation_menu();
 	}
 }
