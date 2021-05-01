@@ -26,8 +26,7 @@ void print_letter_statistic(
     int cLtr,
     int dLtr,
     int eLtr
-)
-{
+) {
     printf("---------\n");
     printf("  A | %d\n", aLtr);
     printf("  B | %d\n", bLtr);
@@ -35,6 +34,46 @@ void print_letter_statistic(
     printf("  D | %d\n", dLtr);
     printf("  E | %d\n", eLtr);
     printf("---------\n\n");
+}
+
+char calculate_Q_letter(float fs)
+{
+	if (fs >= 80 && fs <= 100)
+    {
+		return 'A';
+	}
+	else if (fs >= 68 && fs <=79 )
+    {
+		return 'B';
+	} 
+	else if (fs >= 45 && fs<= 67) 
+    {
+		return 'C';
+	}
+	else if (fs >= 31 && fs <= 44)
+    {
+		return 'D';
+	}
+	else if (fs >= 0 && fs <= 30)
+    {
+		return 'E';
+	}
+	else
+	{
+		return 'Z';
+	}
+}
+
+float calculate_final_score(
+    float nilai_tugas, 
+    float nilai_quiz, 
+    float nilai_UTS, 
+    float nilai_UAS
+) {
+	return  (0.2 * nilai_quiz) + 
+            (0.2 * nilai_tugas) + 
+            (0.3 * nilai_UTS) + 
+            ( 0.3 *nilai_UAS);
 }
 
 #endif

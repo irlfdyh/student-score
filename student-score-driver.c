@@ -11,9 +11,7 @@ void get_all_student_data();
 void get_student_data_by_NIM();
 void update_student_data();
 void get_Q_letter_statistics();
-char calculate_Q_letter(float fs);
 void throw_exception();
-float calculate_final_score(float nilai_tugas, float nilai_quiz, float nilai_uts, float nilai_uas);
 
 int main()
 {
@@ -23,7 +21,7 @@ int main()
 
 void starter_program()
 {   
-    puts("\nPROGRAM PENILAIAN MAHASISWA\n");
+    puts("\nPROGRAM PENCATATAN NILAI MAHASISWA\n");
     operation_menu();
 }
 
@@ -94,9 +92,11 @@ void operation_processor(int option)
 
 void add_student_data()
 {
-	float nilai_akhir, nilai_tugas, nilai_UTS, nilai_quiz, nilai_UAS;
+	float   nilai_akhir, nilai_tugas, nilai_quiz, 
+            nilai_UTS, nilai_UAS;
 
-	if(configure_file("a")==NULL){
+	if (configure_file("a") == NULL)
+    {
 		throw_exception();
 	}
 
@@ -176,10 +176,12 @@ void update_student_data()
 {
 	char q[8];
 	int ict = 0;
+
     if (configure_file("rb+") == NULL)
     {     
         throw_exception();
     }
+
     printf("Masukkan NIM :  ");
     scanf("%s", q); fflush(stdin);
 
@@ -193,7 +195,7 @@ void update_student_data()
     }
 
     int offset_byte = (ict - 1) * sizeof(student);
-	fseek(fl, offset_byte, SEEK_SET);
+	seek_file_position(offset_byte);
 
 	int result = read_student_data();
 	float nilai_tugas, nilai_quiz, nilai_uts, nilai_uas, nilai_akhir;
@@ -204,34 +206,32 @@ void update_student_data()
 	}
 	else 
 	{
-	 puts("Data Sebelumnya ");
-	 print_data(student);
-	 printf ("Nilai Tugas : ");
-	 scanf("%f", &nilai_tugas);
-	 printf ("NIlai Quiz  : ");
-	 scanf("%f", &nilai_quiz);
-	 printf ("Nilai UTS   : ");
-	 scanf("%f", &nilai_uts);
-	 printf ("NIlai UAS   : ");
-	 scanf("%f", &nilai_uas);
-	 
-     nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_uts, nilai_uas);
+        puts("\nData Sebelumnya ");
+        print_data(student);
+        puts("Masukkan data nilai yang baru :");
+        printf("Nilai Tugas     : ");
+        scanf("%f", &nilai_tugas);
+        printf("NIlai Quiz      : ");
+        scanf("%f", &nilai_quiz);
+        printf("Nilai UTS       : ");
+        scanf("%f", &nilai_uts);
+        printf("NIlai UAS       : ");
+        scanf("%f", &nilai_uas);
+        
+        nilai_akhir = calculate_final_score(nilai_tugas, nilai_quiz, nilai_uts, nilai_uas);
 
-    student.task_score = nilai_tugas;
-    student.mid_exam_score = nilai_uts;
-    student.quiz_score = nilai_quiz;
-    student.final_exam_score = nilai_uas;
-    student.final_score = nilai_akhir;
-    student.q_letter = calculate_Q_letter(nilai_akhir);	 
-    fseek(fl, offset_byte, SEEK_SET);
-    save_student_data(student);
-    operation_menu();
+        student.task_score = nilai_tugas;
+        student.mid_exam_score = nilai_uts;
+        student.quiz_score = nilai_quiz;
+        student.final_exam_score = nilai_uas;
+        student.final_score = nilai_akhir;
+        student.q_letter = calculate_Q_letter(nilai_akhir);	
 
+        seek_file_position(offset_byte);
+        save_student_data(student);
+
+        operation_menu();
 	}
-    
-    
-  
-
 }
 
 void get_Q_letter_statistics()
@@ -242,10 +242,12 @@ void get_Q_letter_statistics()
         dLtr = 0,
         eLtr = 0,
         ict = 0;
+
     if (configure_file("rb") == NULL)
     {
         throw_exception();
     }
+
     while (read_student_data() == 1)
     {
         ict++;
@@ -270,39 +272,6 @@ void get_Q_letter_statistics()
         close_file();
         operation_menu();
     }
-}
-
-char calculate_Q_letter(float fs)
-{
-	if(fs >= 80 && fs <= 100)
-    {
-		return 'A';
-	}
-	else if(fs >= 68 && fs <=79 )
-    {
-		return 'B';
-	} 
-	else if(fs >= 45 && fs<= 67) 
-    {
-		return 'C';
-	}
-	else if(fs >= 31 && fs <= 44)
-    {
-		return 'D';
-	}
-	else if(fs >= 0 && fs <= 30)
-    {
-		return 'E';
-	}
-	else
-	{
-		return 'Z';
-	}
-}
-
-float calculate_final_score(float nilai_tugas, float nilai_quiz, float nilai_UTS, float nilai_UAS)
-{
-	return  (0.2 * nilai_quiz) + (0.2 * nilai_tugas) + (0.3 * nilai_UTS) + ( 0.3 *nilai_UAS);
 }
 
 void throw_exception()
