@@ -174,18 +174,29 @@ void get_student_data_by_NIM()
 void update_student_data()
 {
 	char q[8];
-	int ict;
+	int ict = 0;
     if (configure_file("rb+") == NULL)
     {     
         throw_exception();
     }
     printf("Masukkan NIM :  ");
     scanf("%s", q); fflush(stdin);
-    int offset_byte=(1)*sizeof(student);
+
+    while (read_student_data() == 1)
+    {
+        ict++;
+        if (strcmp(student.NIM, q) == 0)
+        {
+            break;
+        }
+    }
+
+    int offset_byte = (ict - 1) * sizeof(student);
 	fseek(fl, offset_byte, SEEK_SET);
-	int result=fread(&student,sizeof(student),1,fl);
+
+	int result = read_student_data();
 	
-	if (result==0)
+	if (result == 0)
 	{
 		throw_exception();
 	}
