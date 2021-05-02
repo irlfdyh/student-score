@@ -95,14 +95,14 @@ void operation_processor(int option)
 
 void add_student_data()
 {
-	float   nilai_akhir, nilai_tugas, nilai_quiz, 
+    float	nilai_akhir, nilai_tugas, nilai_quiz, 
             nilai_UTS, nilai_UAS;
-    struct Student_Data std;
+	struct Student_Data std;
 
-	if (configure_file("a") == NULL)
+    if (configure_file("a") == NULL)
     {
 		throw_exception();
-	}
+    }
 
     printf("Masukan NIM     : ");
     scanf("%s", std.NIM);
@@ -136,7 +136,7 @@ void get_all_student_data()
     if (configure_file("rb") == NULL)
     {
 		throw_exception();
-	}
+    }
     while (read_student_data() == 1) {
         print_data(student);
     }
@@ -178,9 +178,9 @@ void get_student_data_by_NIM()
 
 void update_student_data()
 {
-	char q[8];
-	int ict = 0;
-    struct Student_Data std;
+    char q[8];
+    int ict = 0;
+	struct Student_Data std;
 
     if (configure_file("rb+") == NULL)
     {     
@@ -200,17 +200,17 @@ void update_student_data()
     }
 
     int offset_byte = (ict - 1) * sizeof(student);
-	seek_file_position(offset_byte);
+    seek_file_position(offset_byte);
 
-	int result = read_student_data();
-	float nilai_tugas, nilai_quiz, nilai_uts, nilai_uas, nilai_akhir;
+    int result = read_student_data();
+    float nilai_tugas, nilai_quiz, nilai_uts, nilai_uas, nilai_akhir;
 	
-	if (result == 0)
-	{
+    if (result == 0)
+    {
 		throw_exception();
-	}
-	else 
-	{
+    }
+    else 
+    {
         puts("\nData Sebelumnya ");
         print_data(student);
         puts("Masukkan data nilai yang baru :");
@@ -239,7 +239,7 @@ void update_student_data()
 
         printf("\n");
         operation_menu();
-	}
+    }
 }
 
 void get_Q_letter_statistics()
